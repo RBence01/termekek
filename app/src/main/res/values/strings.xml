@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RestApi-people</string>
+    <string name="deleteButtonText">Törlés</string>
 </resources>

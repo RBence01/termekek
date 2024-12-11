@@ -23,18 +23,17 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText firstNameEditText;
-    private EditText lastNameEditText;
-    private EditText emailEditText;
-    private EditText phoneEditText;
-    private EditText ageEditText;
+    private EditText nevEditText;
+    private EditText mennyisegEditText;
+    private EditText darab_arEditText;
+    private EditText kategoriaEditText;
     private Button cancelButton;
     private Button addButton;
     private Button showAddFormButton;
     private LinearLayout formLinearLayout;
-    private ListView peopleListView;
-    private List<People> peopleList;
-    private PeopleAdapter peopleAdapter;
+    private ListView termekListView;
+    private List<Termek> termekList;
+    private TermekAdapter termekAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         init();
+        
         // API interfész létrehozása
         RetrofitApiService apiService = RetrofitClient.getInstance().create(RetrofitApiService.class);
         loadPeople(apiService);
@@ -64,41 +64,71 @@ public class MainActivity extends AppCompatActivity {
                 showAddFormButton.setVisibility(View.VISIBLE);
             }
         });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Termek termek = new Termek(
+                        nevEditText.getText().toString(),
+                        Integer.parseInt(mennyisegEditText.getText().toString()),
+                        Integer.parseInt(darab_arEditText.getText().toString()),
+                        kategoriaEditText.getText().toString()
+                );
+                termekList.add(termek);
+                nevEditText.setText("");
+                mennyisegEditText.setText("");
+                darab_arEditText.setText("");
+                kategoriaEditText.setText("");
+                termekAdapter.notifyDataSetChanged();
+                formLinearLayout.setVisibility(View.GONE);
+                showAddFormButton.setVisibility(View.VISIBLE);
+                apiService.createTermek(termek).enqueue(new Callback<Termek>() {
+                    @Override
+                    public void onResponse(Call<Termek> call, Response<Termek> response) {
+                        if (response.isSuccessful()) Toast.makeText(MainActivity.this, "Sikeres hozzáadás", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(MainActivity.this, "Sikertelen hozzáadás", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Termek> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "Sikertelen hozzáadás", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
 
     public void init() {
-        firstNameEditText = findViewById(R.id.firstNameEditText);
-        lastNameEditText = findViewById(R.id.lastNameEditText);
-        emailEditText = findViewById(R.id.emailNameEditText);
-        phoneEditText = findViewById(R.id.phoneEditText);
-        ageEditText = findViewById(R.id.ageEditText);
+        nevEditText = findViewById(R.id.nev);
+        mennyisegEditText = findViewById(R.id.mennyiseg);
+        darab_arEditText = findViewById(R.id.darab_ar);
+        kategoriaEditText = findViewById(R.id.kategoria);
         formLinearLayout = findViewById(R.id.formLinearLayout);
         cancelButton = findViewById(R.id.cancelButton);
         addButton = findViewById(R.id.addButton);
         showAddFormButton = findViewById(R.id.showAddFormButton);
-        peopleListView = findViewById(R.id.peopleListView);
-        peopleList = new ArrayList<>();
-        peopleAdapter = new PeopleAdapter(peopleList, this);
-        peopleListView.setAdapter(peopleAdapter);
+        termekListView = findViewById(R.id.peopleListView);
+        termekList = new ArrayList<>();
+        termekAdapter = new TermekAdapter(termekList, this);
+        termekListView.setAdapter(termekAdapter);
     }
 
     public void loadPeople(RetrofitApiService apiService) {
 
-        apiService.getAllPeople().enqueue(new Callback<List<People>>() {
+        apiService.getAllTermek().enqueue(new Callback<List<Termek>>() {
             @Override
-            public void onResponse(Call<List<People>> call, Response<List<People>> response) {
+            public void onResponse(Call<List<Termek>> call, Response<List<Termek>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    peopleList.clear();
-                    peopleList.addAll(response.body());
-                    peopleAdapter.notifyDataSetChanged();
+                    termekList.clear();
+                    termekList.addAll(response.body());
+                    termekAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(MainActivity.this, "Fail to load the people list", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<People>> call, Throwable t) {
+            public void onFailure(Call<List<Termek>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error loading the people list", Toast.LENGTH_SHORT).show();
             }
         });

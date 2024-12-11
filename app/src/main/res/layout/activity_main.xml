@@ -18,37 +18,30 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="First Name"
-            android:id="@+id/firstNameEditText"
-            android:inputType="textPersonName"/>
+            android:hint="Név"
+            android:id="@+id/nev"
+            android:inputType="text"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Last Name"
-            android:id="@+id/lastNameEditText"
-            android:inputType="textPersonName"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:id="@+id/emailNameEditText"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:id="@+id/phoneEditText"
-            android:inputType="phone"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Age"
-            android:id="@+id/ageEditText"
+            android:hint="Mennyiség"
+            android:id="@+id/mennyiseg"
             android:inputType="number"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Darab ár"
+            android:id="@+id/darab_ar"
+            android:inputType="number"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kategória"
+            android:id="@+id/kategoria"
+            android:inputType="text"/>
 
         <Button
             android:layout_width="match_parent"
@@ -64,20 +57,13 @@
             android:text="Mégse"
             android:textSize="20sp"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/modifyButton"
-            android:text="Módosítás"
-            android:textSize="20sp"/>
-
     </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/showAddFormButton"
-        android:text="Ember hozzáadás"
+        android:text="Termék hozzáadás"
         android:textSize="20sp" />
 
     <ListView

@@ -1,5 +1,7 @@
 package com.example.restapi_people;
 
+import com.example.restapi_people.Termek;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,22 +15,22 @@ import retrofit2.http.Path;
 public interface RetrofitApiService {
 
     // GET all users
-    @GET("acttFJ/people")
-    Call<List<People>> getAllPeople();
+    @GET("/DqmdaH/bevasarlas")
+    Call<List<Termek>> getAllTermek();
 
     // GET user by ID
-    @GET("acttFJ/people/{id}")
-    Call<People> getPeopleById(@Path("id") int id);
+    @GET("/DqmdaH/bevasarlas/{id}")
+    Call<Termek> getTermekById(@Path("id") int id);
 
     // POST (create a new user)
-    @POST("acttFJ/people")
-    Call<People> createPeople(@Body People people);
+    @POST("/DqmdaH/bevasarlas")
+    Call<Termek> createTermek(@Body Termek Termek);
 
     // PUT (update a user)
-    @PUT("acttFJ/people/{id}")
-    Call<People> updatePeople(@Path("id") int id, @Body People people);
+    @PUT("/DqmdaH/bevasarlas/{id}")
+    Call<Termek> updateTermek(@Path("id") int id, @Body Termek Termek);
 
     // DELETE (delete a user by ID)
-    @DELETE("acttFJ/people/{id}")
-    Call<Void> deletePeople(@Path("id") int id);
+    @DELETE("/DqmdaH/bevasarlas/{id}")
+    Call<Void> deleteTermek(@Path("id") int id);
 }
